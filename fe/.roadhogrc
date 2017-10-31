@@ -1,0 +1,38 @@
+{
+  "entry": "src/index.js",
+  "disableCSSModules": false,
+  "hash": false,
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:3210/",
+      "pathRewrite": { "^/api" : "" }
+    }
+  },
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        "transform-decorators-legacy",
+        [
+          "import", {
+            "libraryName": "antd",
+            "style": "css"
+          }
+        ]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime",
+        "transform-decorators-legacy",
+        [
+          "import", {
+            "libraryName": "antd",
+            "style": "css"
+          }
+        ]
+      ]
+    }
+  }
+}
