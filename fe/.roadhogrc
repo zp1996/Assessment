@@ -8,6 +8,11 @@
       "pathRewrite": { "^/api" : "" }
     }
   },
+  "extraBabelPlugins": [
+    ["module-resolver", {
+      "root": ["./src"]
+    }]
+  ],
   "env": {
     "development": {
       "extraBabelPlugins": [

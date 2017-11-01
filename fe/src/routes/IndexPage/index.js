@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import CSSModules from 'react-css-modules';
-import styles from './IndexPage.less';
+import styles from './index.less';
 
 @connect(
   state => ({
@@ -9,7 +9,7 @@ import styles from './IndexPage.less';
   })
 )
 @CSSModules(styles, {
-    allowMultiple: true,
+  allowMultiple: true,
 })
 export default class IndexPage extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class IndexPage extends Component {
       type: 'example/fetch',
       payload: { name: 'zp' },
     });
-  };
+  }
   render() {
     const { example } = this.props;
     return (
