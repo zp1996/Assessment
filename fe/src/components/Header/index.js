@@ -11,7 +11,7 @@ import styles from './index.less';
 function Header({ title, login = false }) {
   return (
     <header styleName="header">
-      <h3>{title}</h3>
+      <h4 styleName="title">{title}</h4>
     </header>
   );
 }

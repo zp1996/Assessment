@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+@import "../../utils/variables.less";
+@import "../../utils/mixins.less";
+
+@s: 400px;
+@is: 0.8 * @s;
+.input-container {
+  .size(@s, 300px);
+  border: 1px solid #e3e3e3;
+  box-shadow: 1px 1px 5px rgba(20, 20, 20, 0.05);
+  border-radius: 20px;
+  margin: 100px auto 0 auto;
+  text-align: center;
+  div {
+    width: @is;
+  }
+}
+.input {
+  margin: 20px auto;
+  &:first-of-type {
+    margin-bottom: -10px;
+  }
+}
+.logo {
+  .size(171px, 40px);
+  margin: 20px auto 0px auto;
+}
+.checkbox {
+  text-align: left;
+  color: #aaa;
+  margin: -15px auto 0 auto;
+}
+.btn {
+  width: @is;
+  margin-top: 20px;
+}

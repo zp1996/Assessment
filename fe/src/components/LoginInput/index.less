@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+@import "../../utils/variables.less";
+@import "../../utils/mixins.less";
+
+.error {
+  color: @error-color;
+  text-align: left;
+  .lh-equal-h(19px);
+}
+.err-input {
+  .base {
+    border-color: @error-color;
+  }
+  &:hover input {
+    border-color: @error-color !important;
+  }
+  input {
+    .base;
+    &:focus {
+      .base;
+      box-shadow: 0 0 0 2px rgba(240,65,52,.2);
+    }
+    &:hover {
+      .base;
+    }
+  }
+}
