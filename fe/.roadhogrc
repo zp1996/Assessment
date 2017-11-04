@@ -4,7 +4,7 @@
   "hash": false,
   "proxy": {
     "/api": {
-      "target": "http://localhost:3210/",
+      "target": "http://localhost:7001/",
       "pathRewrite": { "^/api" : "" }
     }
   },

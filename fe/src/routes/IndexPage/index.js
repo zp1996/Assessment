@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import CSSModules from 'react-css-modules';
+import Wrapper from 'components/Wrapper';
 import styles from './index.less';
 
 @connect(
@@ -8,6 +9,7 @@ import styles from './index.less';
     example: state.example
   })
 )
+@Wrapper('指标体系')
 @CSSModules(styles, {
   allowMultiple: true,
 })

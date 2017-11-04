@@ -18,7 +18,7 @@ import styles from './index.less';
 @CSSModules(styles, {
   allowMultiple: true,
 })
-class LoginPage extends Component {
+export default class LoginPage extends Component {
   static check = {
     username: val => val !== '',
     password: val => pwdRE.test(val)
@@ -136,5 +136,3 @@ class LoginPage extends Component {
     );
   }
 }
-
-export default LoginPage;
