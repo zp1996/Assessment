@@ -21,9 +21,9 @@ function Footer({ title, fixed = false }) {
 
 Footer.propTypes = {
   fixed: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
 
 export default CSSModules(styles, {
   allowMultiple: true,
-})(Footer)
+})(Footer);

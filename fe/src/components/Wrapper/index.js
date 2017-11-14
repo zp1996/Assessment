@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import DocumentTitle from 'react-document-title';
-import { HeaderText, FooterText } from 'utils/config';
+import invariant from 'invariant';
 import CSSModules from 'react-css-modules';
+import { HeaderText, FooterText } from 'utils/config';
 import Header from '../Header';
 import Footer from '../Footer';
 import Menu from '../Menu';
@@ -12,12 +12,11 @@ import styles from './index.less';
  * page layout
  */
 function Wrapper(title) {
-  if (process.env.NODE_ENV !== 'production') {
-    if (typeof title !== 'string' || title == '') {
-      throw new Error('please give a page title');
-    }
-  }
-  return function(WrappedComponent) {
+  invariant(
+    typeof title === 'string' && title !== '',
+    'please give a page title',
+  );
+  return function (WrappedComponent) {
     @CSSModules(styles, {
       allowMultiple: true,
     })
@@ -25,7 +24,7 @@ function Wrapper(title) {
       static displayName = `HOC(${WrappedComponent.displayName})`;
       constructor(props) {
         super(props);
-        this.login = Boolean(window.__login__);
+        this.login = Boolean(window.__login__);  // eslint-disable-line
       }
       render() {
         return (

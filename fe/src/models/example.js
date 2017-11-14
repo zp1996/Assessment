@@ -5,7 +5,7 @@ export default {
   namespace: 'example',
 
   state: {
-    name: 'zp1996'
+    name: 'zp1996',
   },
 
   subscriptions: {
@@ -14,10 +14,10 @@ export default {
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {
+    *fetch({ payload }, { put }) {
       const { example: { name = '' } } = yield select();
       if (name === payload) {
-        return void 0;
+        return;
       }
       yield put({
         type: 'save',

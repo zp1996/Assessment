@@ -1,12 +1,17 @@
 import dva from 'dva';
-import { browserHistory } from 'react-router';
-import logger from 'redux-logger';
+import createHistory from 'history/createBrowserHistory';
 import { query } from 'services/example';
 import './index.less';
 
+const actionPlugins = [];
+
+if (process.env.NODE_ENV !== 'production') {
+  actionPlugins.push(require('redux-logger').default);
+}
+
 const app = dva({
-  history: browserHistory,
-  onAction: [ logger ]
+  history: createHistory(),
+  onAction: actionPlugins,
 });
 
 app.model(require('./models/example'));

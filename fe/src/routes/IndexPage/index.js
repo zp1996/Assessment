@@ -6,8 +6,10 @@ import styles from './index.less';
 
 @connect(
   state => ({
-    example: state.example
-  })
+    example: state.example,
+  }), {
+
+  },
 )
 @Wrapper('指标体系')
 @CSSModules(styles, {
@@ -25,6 +27,7 @@ export default class IndexPage extends Component {
     });
   }
   render() {
+    console.log(this.context.store);
     const { example } = this.props;
     return (
       <div styleName="normal">

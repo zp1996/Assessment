@@ -13,17 +13,17 @@ export default {
     username: '',
     password: '',
     remember: true,
-    err: null
+    err: null,
   },
 
   effects: {
     *submit() {
-
+      console.log('submit');
     },
   },
 
   reducers: {
-    save: base
+    save: base,
   },
 
 };

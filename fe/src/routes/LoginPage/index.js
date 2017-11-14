@@ -12,8 +12,8 @@ import styles from './index.less';
 
 @connect(
   state => ({
-    login: state.login
-  })
+    login: state.login,
+  }),
 )
 @CSSModules(styles, {
   allowMultiple: true,
@@ -21,11 +21,11 @@ import styles from './index.less';
 export default class LoginPage extends Component {
   static check = {
     username: val => val !== '',
-    password: val => pwdRE.test(val)
+    password: val => pwdRE.test(val),
   };
   constructor(props) {
     super(props);
-    this.login = Boolean(window.__login__);
+    this.login = Boolean(window.__login__);   // eslint-disable-line
     this.usernameChange = this.change('username');
     this.passwordChange = this.change('password');
     this.remChange = this.change('remember');
@@ -36,8 +36,8 @@ export default class LoginPage extends Component {
     this.props.dispatch({
       type: 'login/save',
       payload: {
-        remember: e.target.checked
-      }
+        remember: e.target.checked,
+      },
     });
   }
   // 错误处理
@@ -47,15 +47,15 @@ export default class LoginPage extends Component {
         payload.err = {
           code: 400,
           key: {
-            [key]: true
-          }
+            [key]: true,
+          },
         };
       } else {
         perr.key[key] = true;
         payload.err = perr;
       }
     } else {
-      perr && perr.key && ( delete perr.key[key] );
+      perr && perr.key && (delete perr.key[key]);
     }
     return payload;
   }
@@ -65,8 +65,8 @@ export default class LoginPage extends Component {
       dispatch({
         type: 'login/save',
         payload: this.getError({
-          [key]: val
-        }, key, err, perr)
+          [key]: val,
+        }, key, err, perr),
       });
     };
   }
@@ -88,12 +88,11 @@ export default class LoginPage extends Component {
     if (err != null) {
       this[`${err}Change`]({
         val: login[err],
-        err
+        err,
       });
     } else {
-      console.log('submit');
+      console.log('submit', dispatch);
     }
-
   }
   render() {
     const { username, password, remember, err = {} } = this.props.login;
@@ -103,7 +102,8 @@ export default class LoginPage extends Component {
         <div styleName="input-container">
           <img src={logo} styleName="logo" />
           <div styleName="input">
-            <LoginInput value={username}
+            <LoginInput
+              value={username}
               preIcon="user"
               change={this.usernameChange}
               placeholder="请您输入用户名"
@@ -112,7 +112,8 @@ export default class LoginPage extends Component {
             />
           </div>
           <div styleName="input">
-            <LoginInput value={password}
+            <LoginInput
+              value={password}
               preIcon="key"
               change={this.passwordChange}
               placeholder="请您输入密码"
@@ -131,7 +132,7 @@ export default class LoginPage extends Component {
             登 录
           </Button>
         </div>
-        <Footer fixed={true} title={FooterText} />
+        <Footer fixed title={FooterText} />
       </div>
     );
   }

@@ -18,22 +18,12 @@ class LoginInput extends Component {
     placeholder: PropTypes.string.isRequired,
     change: PropTypes.func.isRequired,
     errText: PropTypes.string,
-    type: PropTypes.string
+    type: PropTypes.string,
   };
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.clear = this.clear.bind(this);
-  }
-  check(val) {
-    const { pattern } = this.props;
-    return pattern ? !pattern.test(val) : ( val === '' );
-  }
-  change(val) {
-    this.props.change({
-      val,
-      err: this.check(val)
-    });
   }
   onChange(e) {
     this.change(e.target.value);
@@ -42,26 +32,36 @@ class LoginInput extends Component {
     this.node.focus();
     this.change('');
   }
+  change(val) {
+    this.props.change({
+      val,
+      err: this.check(val),
+    });
+  }
+  check(val) {
+    const { pattern } = this.props;
+    return pattern ? !pattern.test(val) : (val === '');
+  }
   render() {
     const {
       value = '', placeholder = '', preIcon,
-      error, errText = '', type = 'text'
+      error, errText = '', type = 'text',
     } = this.props;
     const suffix = value ? (
       <Icon type="close-circle" onClick={this.clear} />
     ) : null;
-    const styleName = error ? "err-input" : "";
+    const styleName = error ? 'err-input' : '';
     return (
       <div>
         <Input
           styleName={styleName}
           placeholder={placeholder}
-          prefix={<Icon type={preIcon} /> }
+          prefix={<Icon type={preIcon} />}
           suffix={suffix}
           value={value}
           onChange={this.onChange}
           type={type}
-          ref={node => this.node = node}
+          ref={node => (this.node = node)}
         />
         <p styleName="error">
           {
