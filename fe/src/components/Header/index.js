@@ -13,23 +13,13 @@ const storeShape = PropTypes.shape({
  * @param {string} title - 描述文字
  * @param {boolean} login - 是否登录
  */
-function Header({ title, login = false }, context) {
-  console.log(context);
+function Header({ title, login = false }) {
   return (
     <header styleName="header">
       <h4 styleName="title">{title}</h4>
     </header>
   );
 }
-
-Header.contextTypes = {
-  store: storeShape,
-};
-
-Header.propTypes = {
-  login: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default CSSModules(styles, {
   allowMultiple: true,
