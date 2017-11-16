@@ -22,7 +22,14 @@
     "react/jsx-no-bind": [0],
     "react/prefer-stateless-function": [0],
     "react/prop-types": [0],
-    "require-yield": [1]
+    "require-yield": [1],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["payload", "perr"]
+      }
+    ]
   },
   "parserOptions": {
     "ecmaFeatures": {

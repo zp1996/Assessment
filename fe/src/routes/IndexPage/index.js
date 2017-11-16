@@ -11,7 +11,7 @@ import styles from './index.less';
 
   },
 )
-@Wrapper('指标体系')
+@Wrapper('头部导航')
 @CSSModules(styles, {
   allowMultiple: true,
 })
@@ -27,7 +27,6 @@ export default class IndexPage extends Component {
     });
   }
   render() {
-    console.log(this.context.store);
     const { example } = this.props;
     return (
       <div styleName="normal">

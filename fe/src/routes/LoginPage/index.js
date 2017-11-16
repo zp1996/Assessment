@@ -23,6 +23,25 @@ export default class LoginPage extends Component {
     username: val => val !== '',
     password: val => pwdRE.test(val),
   };
+  // 错误处理
+  static getError(payload, key, err, perr) {
+    if (err) {
+      if (perr == null || perr.code !== 400) {
+        payload.err = {
+          code: 400,
+          key: {
+            [key]: true,
+          },
+        };
+      } else {
+        perr.key[key] = true;
+        payload.err = perr;
+      }
+    } else if (perr && perr.key) {
+      delete perr.key[key];
+    }
+    return payload;
+  }
   constructor(props) {
     super(props);
     this.login = Boolean(window.__login__);   // eslint-disable-line
@@ -40,31 +59,12 @@ export default class LoginPage extends Component {
       },
     });
   }
-  // 错误处理
-  getError(payload, key, err, perr) {
-    if (err) {
-      if (perr == null || perr.code !== 400) {
-        payload.err = {
-          code: 400,
-          key: {
-            [key]: true,
-          },
-        };
-      } else {
-        perr.key[key] = true;
-        payload.err = perr;
-      }
-    } else {
-      perr && perr.key && (delete perr.key[key]);
-    }
-    return payload;
-  }
   change(key) {
     return ({ val, err }) => {
       const { login: { err: perr }, dispatch } = this.props;
       dispatch({
         type: 'login/save',
-        payload: this.getError({
+        payload: LoginPage.getError({
           [key]: val,
         }, key, err, perr),
       });
@@ -81,7 +81,7 @@ export default class LoginPage extends Component {
     let err = null;
     Object.keys(check).every((key) => {
       const res = check[key](login[key]);
-      !res && (err = key);
+      if (!res) err = key;
       return res;
     });
 
@@ -96,11 +96,12 @@ export default class LoginPage extends Component {
   }
   render() {
     const { username, password, remember, err = {} } = this.props.login;
+    console.log(err);
     return (
       <div>
         <Header login={this.login} title={HeaderText} />
         <div styleName="input-container">
-          <img src={logo} styleName="logo" />
+          <img src={logo} styleName="logo" role="presentation" />
           <div styleName="input">
             <LoginInput
               value={username}
