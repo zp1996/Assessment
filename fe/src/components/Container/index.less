@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+@import "../../utils/variables.less";
+@import "../../utils/mixins.less";
+
+.container {
+  padding: 10px 0px 0px 15px;
+}
+.content-menu {
+  text-align: left;
+  .lh-equal-h(@bg-font-size + 4px);
+}
+.menu {
+  font-size: @font-size;
+  &-active {
+    color: @hover-color;
+  }
+}

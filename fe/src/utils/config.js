@@ -19,3 +19,13 @@ export const router = {
   },
 };
 export const routerOrder = ['/', '/demo'];
+/**
+ * 内容区导航
+ * key为路由,value为期望导航(shape({text, href}) of array)
+ */
+export const contentMenu = {
+  index: [
+    { text: '头部导航' },
+    { text: '一级导航' },
+  ],
+};

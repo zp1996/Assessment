@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import CSSModules from 'react-css-modules';
 import Wrapper from 'components/Wrapper';
+import Container from 'components/Container';
 import styles from './index.less';
 
 @connect(
   state => ({
     example: state.example,
-  }), {
-
-  },
+  }),
 )
 @Wrapper('头部导航')
 @CSSModules(styles, {
@@ -28,12 +27,12 @@ export default class IndexPage extends Component {
   }
   render() {
     const { example } = this.props;
+    console.log(example);
     return (
       <div styleName="normal">
-        <h1 styleName="title">Yay! Welcome to dva!</h1>
-        <div styleName="welcome" />
-        <h2>{`Hello ${example.name}`}</h2>
-        <button onClick={this.changeName}>change name</button>
+        <Container router="index">
+          <h1>Hello world</h1>
+        </Container>
       </div>
     );
   }
