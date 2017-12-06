@@ -10,7 +10,8 @@ import styles from './index.less';
  * @param {string} router - 页面路由
  # @param {object} children - 子组件
  */
-function Container({ router, children }) {
+function Container({ router, children, load }) {
+  console.log(load, 'Container');
   const list = contentMenu[router];
   if (process.env.NODE_ENV !== 'production') {
     if (!(
@@ -28,10 +29,13 @@ function Container({ router, children }) {
         <Breadcrumb>
           {
             list.map((l, i) => {
+              const last = i === list.length - 1;
               const { href = '', text } = l;
-              const styleName = i === list.length - 1 ? 'menu menu-active' : 'menu';
+              const styleName = last ? 'menu menu-active' : 'menu';
+              /* eslint-disable no-script-url */
+              const url = last ? 'javascript:void(0)' : href;
               return (
-                <Breadcrumb.Item href={href} key={text}>
+                <Breadcrumb.Item href={url} key={text}>
                   <span styleName={styleName}>{text}</span>
                 </Breadcrumb.Item>
               );

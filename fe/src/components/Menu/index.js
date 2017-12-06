@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'dva/router';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import { router, routerOrder } from 'utils/config';
@@ -11,11 +12,13 @@ const { Item, SubMenu } = Menu;
   }),
 )
 export default class MenuComponent extends Component {
-  static uniqueMenu({ key, icon, text }) {
+  static uniqueMenu({ key, icon, text }, url) {
     return (
       <Item key={key}>
-        <Icon type={icon} />
-        <span>{text}</span>
+        <Link to={url}>
+          <Icon type={icon} />
+          <span>{text}</span>
+        </Link>
       </Item>
     );
   }
@@ -50,8 +53,8 @@ export default class MenuComponent extends Component {
             routerOrder.map((k) => {
               const r = router[k];
               return r.children ?
-                MenuComponent.subMenu(router[k]) :
-                MenuComponent.uniqueMenu(router[k]);
+                MenuComponent.subMenu(router[k], k) :
+                MenuComponent.uniqueMenu(router[k], k);
             })
           }
         </Menu>

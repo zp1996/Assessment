@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+@import "../../styles/variables.less";
+@import "../../styles/mixins.less";
+
+.to-add {
+  @c: #ddd;
+  @s: 200px;
+  text-align: center;
+  border: 2px dashed @border-color;
+  border-radius: 10px;
+  .lh-equal-h(@s);
+  font-size: @s * 0.4;
+  color: @border-color;
+  cursor: pointer;
+}

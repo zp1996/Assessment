@@ -1,6 +1,6 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
-import { query } from 'services/example';
+import createLoading from 'dva-loading';
 import './index.less';
 
 const actionPlugins = [];
@@ -14,11 +14,12 @@ const app = dva({
   onAction: actionPlugins,
 });
 
+app.use(createLoading());
+
 app.model(require('./models/example'));
 app.model(require('./models/login'));
+app.model(require('./models/slider'));
 
 app.router(require('./router'));
 
 app.start('#root');
-
-query();

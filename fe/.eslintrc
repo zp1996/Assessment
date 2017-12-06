@@ -27,7 +27,19 @@
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": ["payload", "perr"]
+        "ignorePropertyModificationsFor": ["payload", "perr", "res", "component"]
+      }
+    ],
+    "class-methods-use-this": [
+      "error",
+      {
+        "exceptMethods": ["renderAddNew"]
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
       }
     ]
   },

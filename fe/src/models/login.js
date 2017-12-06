@@ -1,4 +1,4 @@
-import { base } from 'utils/reducer';
+import { base } from 'utils/redux-helper';
 
 export default {
 
