@@ -3,6 +3,52 @@
 @import "../../styles/variables.less";
 @import "../../styles/mixins.less";
 
+@h: 150px;
+
 .slider-content {
   padding: 20px;
+}
+.add-new {
+  height: @add-height;
+  border: @add-border;
+  border-radius: @add-radius;
+  padding: 0px 20px;
+  margin: 0px auto 20px auto;
+  width: @add-width;
+  &-list {
+    li {
+      margin: (@add-height - @h) / 2 0px;
+      float: left;
+      height: @h;
+      margin-right: 20px;
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+}
+.slider-img {
+  width: 300px;
+  height: @h;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.title-label {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.title {
+  width: 350px;
+}
+.stitle {
+  display: inline-block;
+  margin-top: 15px;
+}
+.style {
+  width: 200px;
+}
+:global(.slider-style-chechbox .ant-row > div) {
+  margin-top: 5px;
 }

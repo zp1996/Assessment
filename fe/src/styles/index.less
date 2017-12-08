@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import "./styles/variables.less";
+@import "./variables.less";
 
 /* remove browser style */
 html, body, div, span, applet, object, iframe,
@@ -60,3 +60,7 @@ table {
   .loop(@c - 1);
 }
 .loop(6);
+
+:global(body) {
+  min-width: 1400px;
+}
