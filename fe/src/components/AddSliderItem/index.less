@@ -5,9 +5,6 @@
 
 @h: 150px;
 
-.slider-content {
-  padding: 20px;
-}
 .add-new {
   height: @add-height;
   border: @add-border;
@@ -15,6 +12,9 @@
   padding: 0px 20px;
   margin: 0px auto 20px auto;
   width: @add-width;
+  &:last-child {
+    margin-bottom: 0px;
+  }
   &-list {
     li {
       margin: (@add-height - @h) / 2 0px;
