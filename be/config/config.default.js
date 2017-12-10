@@ -7,11 +7,18 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1509629552850_8863';
 
   // add your config here
-  config.middleware = [];
+  config.middleware = [ 'url' ];
 
   config.mongoose = {
-    url: 'mongodb://127.0.0.1/assetment',
+    url: 'mongodb://127.0.0.1/lsgopage',
     options: {}
+  };
+
+  // 暂不开启，后期完善
+  config.security = {
+    csrf: {
+      enable: false,
+    },
   };
 
   return config;

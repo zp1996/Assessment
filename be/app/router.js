@@ -3,6 +3,9 @@
 module.exports = app => {
   app.get('/', 'home.index');
 
-  /* 后台接口 */
-  app.get('/be/demo', 'be.demo');
+  /* Banner图相关接口 */
+  app.get('/slider/get', 'slider.get')
+
+  /* 后台登录接口 */
+  app.post('/be/login', 'be.login');
 };

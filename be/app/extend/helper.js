@@ -5,32 +5,30 @@ module.exports = {
   /**
    * 500error
    */
-  serverError() {
+  serverError(err) {
+    this.app.logger.error(err);
     return {
       code: 500,
       msg: '服务器发生未知错误！'
     };
   },
   /**
-   * 校验密码并加密
+   * 400error
    */
-  getPassword(str) {
-    return new Promise((resolve, reject) => {
-      // 数据校验
-      const re = /^\w{6,18}$/;
-      if (str == null || !re.test(str)) {
-        return reject({
-          code: 400,
-          msg: '密码格式错误！'
-        });
+  paramErr(msg) {
+    return { code: 400, msg };
+  },
+  /**
+   * 校验入参
+   */
+  checkParams(params) {
+    let res = null;
+    params.every(p => {
+      const flag = p.re ? p.re.test(p.data) : p.data !== '';
+      if (!flag) {
+        res = this.paramErr(p.msg);
       }
-      bcrypt.hash(str, saltRounds, (err, hash) => {
-        if (err != null) {
-          this.app.logger.error(err);
-          return reject(this.serverError());
-        }
-        resolve(hash);
-      });
     });
-  }
+    return res;
+  },
 };
