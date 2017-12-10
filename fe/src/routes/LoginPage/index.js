@@ -5,7 +5,8 @@ import { Button, Checkbox } from 'antd';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import LoginInput from 'components/LoginInput';
-import { pwdRE } from 'utils/index';
+import showError from 'components/ShowError';
+import { pwdRE, changeState } from 'utils/index';
 import { HeaderText, FooterText } from 'utils/config';
 import logo from 'assets/logo.png';
 import styles from './index.less';
@@ -23,80 +24,64 @@ export default class LoginPage extends Component {
     username: val => val !== '',
     password: val => pwdRE.test(val),
   };
-  // 错误处理
-  static getError(payload, key, err, perr) {
-    if (err) {
-      if (perr == null || perr.code !== 400) {
-        payload.err = {
-          code: 400,
-          key: {
-            [key]: true,
-          },
-        };
-      } else {
-        perr.key[key] = true;
-        payload.err = perr;
-      }
-    } else if (perr && perr.key) {
-      delete perr.key[key];
-    }
-    return payload;
-  }
   constructor(props) {
     super(props);
-    this.login = Boolean(window.__login__);   // eslint-disable-line
+
+    this.state = {
+      username: '',
+      password: '',
+      remember: true,
+      error: null,
+    };
+
     this.usernameChange = this.change('username');
     this.passwordChange = this.change('password');
-    this.remChange = this.change('remember');
-    this.changeRemember = this.changeRemember.bind(this);
+    this.changeRemember = changeState(this, 'remember', e => e.target.checked);
     this.submit = this.submit.bind(this);
   }
-  changeRemember(e) {
-    this.props.dispatch({
-      type: 'login/save',
-      payload: {
-        remember: e.target.checked,
-      },
-    });
+  componentWillMount() {
+    this.login = Boolean(window.__login__);   // eslint-disable-line
+  }
+  componentDidUpdate() {
+    const { err } = this.props.login;
+    if (err) {
+      showError(err);
+    }
   }
   change(key) {
     return ({ val, err }) => {
-      const { login: { err: perr }, dispatch } = this.props;
-      dispatch({
-        type: 'login/save',
-        payload: LoginPage.getError({
-          [key]: val,
-        }, key, err, perr),
+      this.setState({
+        [key]: val,
+        error: err ? key : null,
       });
     };
   }
-  inputErr(key) {
-    const { err } = this.props.login;
-    return Boolean(err && err.key && err.key[key]);
-  }
   submit() {
-    const { login, dispatch } = this.props;
     const { check } = LoginPage;
-    // 再次验证
+    const s = this.state;
+
     let err = null;
     Object.keys(check).every((key) => {
-      const res = check[key](login[key]);
+      const res = check[key](s[key]);
       if (!res) err = key;
       return res;
     });
 
     if (err != null) {
-      this[`${err}Change`]({
-        val: login[err],
-        err,
-      });
+      this.setState({ error: err });
     } else {
-      console.log('submit', dispatch);
+      this.props.dispatch({
+        type: 'login/submit',
+        payload: {
+          username: s.username,
+          password: s.password,
+          remember: s.remember,
+        },
+      });
     }
   }
   render() {
-    const { username, password, remember, err = {} } = this.props.login;
-    console.log(err);
+    const { username, password, remember, error } = this.state;
     return (
       <div>
         <Header login={this.login} title={HeaderText} />
@@ -109,7 +94,7 @@ export default class LoginPage extends Component {
               change={this.usernameChange}
               placeholder="请您输入用户名"
               errText="请输入用户名"
-              error={this.inputErr('username')}
+              error={error === 'username'}
             />
           </div>
           <div styleName="input">
@@ -119,7 +104,7 @@ export default class LoginPage extends Component {
               change={this.passwordChange}
               placeholder="请您输入密码"
               errText="输入密码格式有误"
-              error={this.inputErr('password')}
+              error={error === 'password'}
               type="password"
               pattern={pwdRE}
             />
