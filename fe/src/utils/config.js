@@ -9,6 +9,11 @@ export const router = {
     icon: 'tags',
     text: '头部导航',
   },
+  '/introduction': {
+    key: 'introductions',
+    icon: 'pushpin',
+    text: '公司及网站信息',
+  },
   '/slider': {
     key: 'sliders',
     icon: 'switcher',
@@ -28,7 +33,7 @@ export const router = {
     ],
   },
 };
-export const routerOrder = ['/', '/demo', '/slider', '/tab'];
+export const routerOrder = ['/introduction', '/', '/demo', '/slider', '/tab'];
 /**
  * 内容区导航
  * key为路由,value为期望导航(shape({text, href}) of array)
@@ -41,4 +46,18 @@ export const contentMenu = {
   slider: [
     { text: '宣传Banner' },
   ],
+  introduction: [
+    { text: '公司及网站信息' },
+  ],
+};
+/**
+ * 公司介绍默认数据
+ */
+export const data = {
+  name: '',
+  enName: '',
+  address: '',
+  record: '',
+  copyright: '',
+  introduction: '',
 };

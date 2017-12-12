@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import IndexPage from 'routes/IndexPage';
 import LoginPage from 'routes/LoginPage';
 import SliderPage from 'routes/SliderPage';
+import IntroductionPage from 'routes/IntroductionPage';
 
 function RouterConfig({ history }) {
   return (
@@ -12,6 +13,7 @@ function RouterConfig({ history }) {
         <Route path="/" exact component={IndexPage} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/slider" exact component={SliderPage} />
+        <Route path="/introduction" exact component={IntroductionPage} />
       </Switch>
     </ConnectedRouter>
   );

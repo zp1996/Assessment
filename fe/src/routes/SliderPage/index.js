@@ -33,24 +33,22 @@ export default class SliderPage extends Component {
     const { load, slider: { list } } = this.props;
     const { adding } = this.state;
     return (
-      <div>
-        <Container router="slider" load={load}>
-          <div styleName="slider-content">
-            {
-              Array.isArray(list) && list.map((l, i) => (
-                <AddSliderItem data={l} key={i} />
-              ))
-            }
-            {
-              adding ? (
-                <AddSliderItem addnew chance={this.chanceAdd} />
-              ) : (
-                <ToAdd handle={this.add} />
-              )
-            }
-          </div>
-        </Container>
-      </div>
+      <Container router="slider" load={load}>
+        <div styleName="slider-content">
+          {
+            Array.isArray(list) && list.map((l, i) => (
+              <AddSliderItem data={l} key={i} />
+            ))
+          }
+          {
+            adding ? (
+              <AddSliderItem addnew chance={this.chanceAdd} />
+            ) : (
+              <ToAdd handle={this.add} />
+            )
+          }
+        </div>
+      </Container>
     );
   }
 }

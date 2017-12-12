@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+@import "../../styles/variables.less";
+@import "../../styles/mixins.less";
+
+.wrapper {
+  min-width: @add-width;
+  overflow: hidden;
+}
+.left-wrapper {
+  width: 500px;
+  float: left;
+}
+.right-wrapper {
+  .left-wrapper;
+}
+.input-wrapper {
+  @s: 300px;
+  margin: 30px 0px;
+  float: left;
+  input {
+    width: @s;
+  }
+  textarea {
+    width: @s;
+    min-height: 100px;
+    resize: none;
+  }
+}
+.input-label {
+  float: left;
+  line-height: 28px;
+  width: 80px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+}
+.button-area {
+  text-align: center;
+  button {
+    margin: 20px;
+  }
+}

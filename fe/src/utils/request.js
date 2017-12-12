@@ -18,10 +18,11 @@ export function get(url, options = { method: 'GET' }) {
   return fetch(`/api${url}`, options)
     .then(checkStatus)
     .then(data => data.json())
-    .catch(() => ({
-      code: 404,
-      msg: '请求失败，请稍后再试！',
-    }));
+    .then(data => data)
+    .catch((err = {}) => {
+      const { code = 404, message = '请求失败，请稍后再试！' } = err;
+      return { code, msg: message };
+    });
 }
 
 /**

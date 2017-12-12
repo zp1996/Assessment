@@ -7,8 +7,7 @@ export function base(state, action) {
 
 export function setup(path, types) {
   return ({ dispatch, history }) => {
-    history.listen(({ pathname, query }) => {
-      console.log(query);
+    history.listen(({ pathname, query }) => {   // eslint-disable-line
       if (pathname === path) {
         types.forEach((type) => {
           dispatch({ type });

@@ -1,5 +1,6 @@
 import { base } from 'utils/redux-helper';
 import { login } from 'services/login';
+import { setError } from './base';
 
 export default {
 
@@ -15,6 +16,10 @@ export default {
     login: false,
   },
 
+  subscriptions: {
+
+  },
+
   effects: {
     *submit({ payload }, { put }) {
       try {
@@ -22,7 +27,7 @@ export default {
         console.log(res);
       } catch (err) {
         yield put({
-          type: 'submitError',
+          type: 'setError',
           err,
         });
       }
@@ -31,12 +36,7 @@ export default {
 
   reducers: {
     save: base,
-    submitError: (state, action) => {
-      return {
-        ...state,
-        err: action.err,
-      };
-    },
+    ...setError,
   },
 
 };

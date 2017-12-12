@@ -46,6 +46,7 @@ export default class LoginPage extends Component {
     const { err } = this.props.login;
     if (err) {
       showError(err);
+      this.props.login.err = null;
     }
   }
   change(key) {
