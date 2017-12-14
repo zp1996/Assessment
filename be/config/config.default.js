@@ -7,7 +7,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1509629552850_8863';
 
   // add your config here
-  config.middleware = [ 'url' ];
+  config.middleware = [ 'error' ];
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1/lsgopage',

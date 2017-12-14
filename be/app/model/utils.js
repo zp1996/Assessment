@@ -2,6 +2,7 @@
 
 /**
  * 保存前添加更新时间
+ * @param {object} next - 默认参数
  */
 exports.preSave = function(next) {
   if (this.isNew) {
@@ -10,4 +11,9 @@ exports.preSave = function(next) {
     this.updateTime = Date.now();
   }
   next();
+};
+
+exports.dateSchema = {
+  createTime: Date,
+  updateTime: Date,
 };

@@ -5,7 +5,7 @@ module.exports = app => {
     * get() {
       this.ctx.body = {
         list: [],
-        code: 200
+        code: 200,
       };
     }
   }

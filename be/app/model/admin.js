@@ -1,20 +1,20 @@
 'use strict';
 
-const { preSave, paramErr } = require('./utils');
+const { preSave, dateSchema } = require('./utils');
 const { comparePassword } = require('../lib/bcrypt');
 
 module.exports = app => {
   const { mongoose } = app;
-  const AdminSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    status: {
-      type: Number,
-      default: 1
-    },
-    createTime: Date,
-    updateTime: Date
-  });
+  const AdminSchema = new mongoose.Schema(
+    Object.assign({
+      username: String,
+      password: String,
+      status: {
+        type: Number,
+        default: 1,
+      },
+    }, dateSchema)
+  );
 
   AdminSchema.statics = {
     * login(username, password) {
@@ -26,12 +26,12 @@ module.exports = app => {
         const flag = yield comparePassword(password, row.password);
         if (flag) {
           return true;
-        } else {
-          return '密码错误！';
         }
-      } else {
-        return '该用户不存在！';
+        return '密码错误！';
+
       }
+      return '该用户不存在！';
+
     },
 
     * add(username, password) {
@@ -40,7 +40,8 @@ module.exports = app => {
           username,
           password,
         });
-      } catch(err) {
+        return res;
+      } catch (err) {
         console.log(err);
       }
     },

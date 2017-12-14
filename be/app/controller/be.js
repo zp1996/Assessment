@@ -10,7 +10,7 @@ module.exports = app => {
       this.helper = this.ctx.helper;
     }
     * login() {
-      const { username, password, remember } = this.ctx.request.body;
+      const { username, password } = this.ctx.request.body;
 
       const body = this.helper.checkParams([
         { data: username, msg: '用户名格式错误！' },
@@ -20,15 +20,11 @@ module.exports = app => {
       if (body) {
         this.ctx.body = body;
       } else {
-        try {
-          const res = yield this.model.login(username, password);
-          if (typeof res === 'string') {
-            this.ctx.body = this.helper.paramErr(res);
-          } else {
-            this.ctx.body = { msg: 'success' };
-          }
-        } catch(err) {
-          this.ctx.body = this.helper.serverError(err);
+        const res = yield this.model.login(username, password);
+        if (typeof res === 'string') {
+          this.ctx.body = this.helper.paramErr(res);
+        } else {
+          this.ctx.body = { msg: 'success' };
         }
       }
     }

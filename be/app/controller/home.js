@@ -4,7 +4,7 @@ module.exports = app => {
   class HomeController extends app.Controller {
     * index() {
       this.ctx.body = {
-        msg: 'hi, egg'
+        msg: 'hi, egg',
       };
     }
   }
