@@ -60,4 +60,8 @@ export const data = {
   record: '',
   copyright: '',
   introduction: '',
+  zip: '',
+  email: '',
+  phone: '',
+  fax: '',
 };

@@ -29,6 +29,10 @@ export default class IntroductionPage extends Component {
     introduction: '公司介绍',
     record: '网站备案',
     copyright: '网站版权',
+    zip: '公司邮编',
+    phone: '联系电话',
+    email: 'Email',
+    fax: '公司传真',
   };
   constructor(props) {
     super(props);
@@ -127,6 +131,7 @@ export default class IntroductionPage extends Component {
               {this.renderInput('name', t.name)}
               {this.renderInput('enName', t.enName)}
               {this.renderInput('address', t.address)}
+              {this.renderInput('zip', t.zip)}
               <div styleName="input-wrapper">
                 <label styleName="input-label" htmlFor="introd-introd">
                   {t.introduction}：
@@ -140,6 +145,9 @@ export default class IntroductionPage extends Component {
               </div>
             </div>
             <div styleName="right-wrapper">
+              {this.renderInput('phone', t.phone)}
+              {this.renderInput('fax', t.fax)}
+              {this.renderInput('email', t.email)}
               {this.renderInput('record', t.record)}
               {this.renderInput('copyright', t.copyright)}
             </div>
