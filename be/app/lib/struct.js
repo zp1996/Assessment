@@ -14,6 +14,7 @@ exports.IntroductionStruct = {
   record: '请填写网站备案',
   copyright: '请填写网站版权',
   zip: '请填写公司邮编',
+  logo: '请上传公司logo',
 };
 
 /**

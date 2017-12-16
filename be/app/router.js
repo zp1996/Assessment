@@ -11,7 +11,11 @@ module.exports = app => {
 
   /* 公司介绍相关接口 */
   app.post('/introduction/add', 'introduction.add');
+  app.post('/introduction/update', 'introduction.update');
   app.get('/introduction/get', 'introduction.get');
   app.get('/introduction/getCompany', 'introduction.getCompany');
   app.get('/introduction/getConcat', 'introduction.getConcat');
+
+  /* 上传图片接口 */
+  app.post('/upload', 'upload.index');
 };

@@ -1,5 +1,6 @@
 'use strict';
 
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -9,7 +10,7 @@ module.exports = {
    * @param {string} str - 待加密密码
    * @return {promise} 加密后结果
    */
-  getPassword(str) {
+  encryptStr(str) {
     return new Promise((resolve, reject) => {
       bcrypt.hash(str, saltRounds, (err, hash) => {
         if (err != null) {
@@ -34,5 +35,14 @@ module.exports = {
         resolve(res);
       });
     });
+  },
+  /**
+   * 进行md5加密
+   * @param {string} str - 待加密字符串
+   * @return {string} 加密后结果
+   */
+  encryptByMd5(str) {
+    const date = Number(new Date());
+    return crypto.createHash('md5').update(`${str}${date}`).digest('hex');
   },
 };

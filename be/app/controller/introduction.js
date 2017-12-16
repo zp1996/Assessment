@@ -9,7 +9,7 @@ module.exports = app => {
       this.helper = this.ctx.helper;
       this.model = this.ctx.model.Introduction;
     }
-    * add() {
+    * baseSave(fn, msg) {
       const { payload } = this.ctx.request.body;
 
       const params = Object.keys(payload).map(key => ({
@@ -21,9 +21,15 @@ module.exports = app => {
       if (body) {
         this.ctx.body = body;
       } else {
-        yield this.model.add(payload);
-        this.ctx.body = this.helper.success('添加成功');
+        yield this.model[fn](payload);
+        this.ctx.body = this.helper.success(msg);
       }
+    }
+    * add() {
+      yield this.baseSave('add', '添加成功');
+    }
+    * update() {
+      yield this.baseSave('update', '更改成功');
     }
     * get(ctx, keys = Object.keys(IntroductionStruct)) {
       const res = yield this.model.findOne({}, keys);

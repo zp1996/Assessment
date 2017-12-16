@@ -1,7 +1,7 @@
 'use strict';
 
 const { preSave, dateSchema } = require('./utils');
-const { comparePassword } = require('../lib/bcrypt');
+const { comparePassword } = require('../lib/encrypt');
 
 module.exports = app => {
   const { mongoose } = app;

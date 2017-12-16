@@ -45,4 +45,11 @@ module.exports = {
     });
     return res;
   },
+  /**
+   * 获取服务url地址
+   * @return {string} url
+   */
+  getUrl() {
+    return `${this.ctx.protocol}://${this.ctx.host}`;
+  },
 };

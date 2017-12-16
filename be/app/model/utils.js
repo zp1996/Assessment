@@ -17,3 +17,14 @@ exports.dateSchema = {
   createTime: Date,
   updateTime: Date,
 };
+
+/**
+ * 创建错误对象
+ * @param {string} msg - 错误信息
+ * @return {object} 错误对象
+ */
+exports.createError = function(msg) {
+  const error = new Error();
+  error.msg = msg;
+  return error;
+};

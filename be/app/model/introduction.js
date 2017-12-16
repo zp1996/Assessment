@@ -1,6 +1,6 @@
 'use strict';
 
-const { preSave, dateSchema } = require('./utils');
+const { preSave, dateSchema, createError } = require('./utils');
 const { IntroductionStruct, getSchema } = require('../lib/struct');
 
 module.exports = app => {
@@ -17,10 +17,11 @@ module.exports = app => {
       if (row.length === 0) {
         yield this.create(data);
       } else {
-        const error = new Error();
-        error.msg = '已存在该类型数据，不可再次创建';
-        throw error;
+        throw createError('已存在该类型数据，不可再次创建');
       }
+    },
+    * update({ data, id }) {
+      yield this.findByIdAndUpdate(id, { $set: data });
     },
   };
 
