@@ -9,13 +9,18 @@ module.exports = app => {
       this.helper = this.ctx.helper;
       this.model = this.ctx.model.Introduction;
     }
-    * baseSave(fn, msg) {
+    * baseSave(fn, msg, hd = v => v) {
       const { payload } = this.ctx.request.body;
-
-      const params = Object.keys(payload).map(key => ({
-        data: payload[key],
-        msg: IntroductionStruct[key],
-      }));
+      const params = [];
+      const data = hd(payload);
+      Object.keys(data).forEach(key => {
+        if (key !== 'id') {
+          params.push({
+            data: data[key],
+            msg: IntroductionStruct[key],
+          });
+        }
+      });
 
       const body = this.helper.checkParams(params);
       if (body) {
@@ -29,7 +34,7 @@ module.exports = app => {
       yield this.baseSave('add', '添加成功');
     }
     * update() {
-      yield this.baseSave('update', '更改成功');
+      yield this.baseSave('update', '更改成功', p => p.data);
     }
     * get(ctx, keys = Object.keys(IntroductionStruct)) {
       const res = yield this.model.findOne({}, keys);
