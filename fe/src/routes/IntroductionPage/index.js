@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import CSSModules from 'react-css-modules';
-import { Input, Button, message } from 'antd';
+import { Upload, Input, Button, Icon, message } from 'antd';
 import Wrapper from 'components/Wrapper';
 import Container from 'components/Container';
 import showError from 'components/ShowError';
@@ -15,6 +15,7 @@ const { TextArea } = Input;
   state => ({
     introduction: state.introduction,
     load: state.loading.global,
+    error: state.error,
   }),
 )
 @Wrapper('公司及网站信息')
@@ -33,6 +34,7 @@ export default class IntroductionPage extends Component {
     phone: '联系电话',
     email: 'Email',
     fax: '公司传真',
+    logo: '公司logo',
   };
   constructor(props) {
     super(props);
@@ -47,6 +49,16 @@ export default class IntroductionPage extends Component {
     this.submit = this.submit.bind(this);
     this.chance = this.chance.bind(this);
     this.changeStatus = changeState(this, 'change', () => true);
+    this.changeLogo = changeState(this, 'logo', (info) => {
+      const { file: { status, response } } = info;
+      if (status === 'done') {
+        if (response.code === 200) {
+          return response.msg.url;
+        } else {
+          showError(response);
+        }
+      }
+    });
     this.keys.forEach((key) => {
       this[`change${key}`] = changeState(this, key, domChange);
     });
@@ -72,13 +84,10 @@ export default class IntroductionPage extends Component {
     } else if (d.success) {
       message.success('更改成功！');
       d.success = false;
-    } else {
-      const { err: e } = d;
-      if (e) {
-        showError(e);
+    } else if (this.props.error.err) {
+        showError(this.props.error);
         // 不更新ui
-        d.err = null;
-      }
+        this.props.error.err = false;
     }
   }
   submit() {
@@ -90,8 +99,9 @@ export default class IntroductionPage extends Component {
       return flag;
     });
     if (res) {
+      const type = this.props.introduction.id == null ? 'add' : 'update';
       this.props.dispatch({
-        type: 'introduction/add',
+        type: `introduction/${type}`,
         payload: this.state,
       });
     }
@@ -121,7 +131,7 @@ export default class IntroductionPage extends Component {
     );
   }
   render() {
-    const { change, introduction } = this.state;
+    const { change, introduction, logo } = this.state;
     const { znData: t } = IntroductionPage;
     return (
       <Container router="introduction">
@@ -150,6 +160,23 @@ export default class IntroductionPage extends Component {
               {this.renderInput('email', t.email)}
               {this.renderInput('record', t.record)}
               {this.renderInput('copyright', t.copyright)}
+              <div styleName="input-wrapper">
+                {
+                  logo ? (
+                    <img src={logo} styleName="img-logo" />
+                  ) : (
+                    <span styleName="img-area">
+                      <Icon type="plus" />
+                    </span>
+                  )
+                }
+                <Upload action="/api/upload" name="file" onChange={this.changeLogo}>
+                  <Button type="primary" disabled={!change}>
+                    <Icon type="upload" />
+                    <span>{ logo ? '更改图片' : '上传图片'}</span>
+                  </Button>
+                </Upload>
+              </div>
             </div>
           </div>
           <div styleName="button-area">

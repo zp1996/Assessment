@@ -1,7 +1,7 @@
 import { setup } from 'utils/redux-helper';
 import { data } from 'utils/config';
-import { add, get } from 'services/introduction';
-import { setError, setState } from './base';
+import { add, get, update } from 'services/introduction';
+import { setState } from './base';
 
 export default {
 
@@ -9,6 +9,7 @@ export default {
 
   state: {
     err: null,
+    id: null,
     success: false,
     data,
   },
@@ -18,33 +19,47 @@ export default {
       delete payload.change;
       delete payload.err;
 
-      try {
-        yield add({ payload });
-        yield put({
-          type: 'success',
-          success: true,
-        });
-      } catch (err) {
-        yield put({
-          type: 'setError',
-          err,
+      yield add({ payload });
+      yield put({
+        type: 'addSuccess',
+        success: true,
+      });
+    },
+    *update({ payload }, { put, select }) {
+      delete payload.change;
+      delete payload.err;
+
+      let flag = false;
+      const { introduction: i } = yield select();
+      const nd = {};
+      Object.keys(payload).forEach((key) => {
+        const d = payload[key];
+        if (d !== i.data[key]) {
+          nd[key] = d;
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        yield update({
+          payload: { data: nd, id: i.id },
         });
       }
+      yield put({
+        type: 'updateSuccess',
+        data: nd,
+        success: true,
+      });
     },
     *get({}, { put }) {           // eslint-disable-line
-      try {
-        const res = yield get();
-        if (res != null) {
-          delete res._id;         // eslint-disable-line
-          yield put({
-            type: 'init',
-            data: res,
-          });
-        }
-      } catch (err) {
+      const res = yield get();
+      const id = res._id;       // eslint-disable-line
+      delete res._id;           // eslint-disable-line
+      if (res != null) {
         yield put({
-          type: 'setError',
-          err,
+          type: 'init',
+          data: res,
+          id,
         });
       }
     },
@@ -55,12 +70,19 @@ export default {
   },
 
   reducers: {
-    ...setError,
-    success: setState('success'),
+    addSuccess: setState('success'),
+    updateSuccess: (state, action) => {
+      const nd = { ...state.data, ...action.data };
+      return {
+        ...state,
+        success: true,
+        data: nd,
+      };
+    },
     init: (state, action) => {
       return {
         ...state,
-        ...{ data: action.data },
+        ...{ data: action.data, id: action.id },
       };
     },
   },

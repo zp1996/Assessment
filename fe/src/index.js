@@ -1,12 +1,13 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
 import createLoading from 'dva-loading';
+import createError from 'utils/dva-error';
 import './styles/index.less';
 
 const actionPlugins = [];
 
 if (process.env.NODE_ENV !== 'production') {
-  // actionPlugins.push(require('redux-logger').default);
+  actionPlugins.push(require('redux-logger').default);
 }
 
 const app = dva({
@@ -15,6 +16,7 @@ const app = dva({
 });
 
 app.use(createLoading());
+app.use(createError());
 
 app.model(require('./models/example'));
 app.model(require('./models/login'));

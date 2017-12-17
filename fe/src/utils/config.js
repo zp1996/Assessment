@@ -64,4 +64,5 @@ export const data = {
   email: '',
   phone: '',
   fax: '',
+  logo: '',
 };
