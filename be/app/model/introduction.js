@@ -7,7 +7,7 @@ module.exports = app => {
   const { mongoose } = app;
   const IntroductionSchema = new mongoose.Schema(
     Object.assign(
-      getSchema(IntroductionStruct, String), dateSchema
+      getSchema(IntroductionStruct), dateSchema
     )
   );
 

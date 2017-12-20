@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'dva';
+// import { connect } from 'dva';
 import CSSModules from 'react-css-modules';
 import Wrapper from 'components/Wrapper';
 import Container from 'components/Container';
 import styles from './index.less';
 
-@connect(
-  state => ({
-    example: state.example,
-  }),
-)
+// @connect(
+//   state => ({
+//     example: state.example,
+//   }),
+// )
 @Wrapper('头部导航')
 @CSSModules(styles, {
   allowMultiple: true,
@@ -17,17 +17,20 @@ import styles from './index.less';
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);
-    this.changeName = this.changeName.bind(this);
+    this.state = { demo: true };
+    // this.changeName = this.changeName.bind(this);
   }
-  changeName() {
-    this.props.dispatch({
-      type: 'example/fetch',
-      payload: { name: 'zp' },
-    });
-  }
+  // changeName() {
+  //   // this.props.dispatch({
+  //   //   type: 'example/fetch',
+  //   //   payload: { name: 'zp' },
+  //   // });
+  // }
   render() {
-    const { example } = this.props;
-    console.log(example);
+    // const { example } = this.props;
+    // console.log(example);
+    const { demo } = this.state;
+    console.log(demo);
     return (
       <div styleName="normal">
         <Container router="index">

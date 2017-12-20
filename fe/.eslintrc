@@ -33,13 +33,19 @@
     "class-methods-use-this": [
       "error",
       {
-        "exceptMethods": ["renderAddNew"]
+        "exceptMethods": ["renderAddNew", "addPayload"]
       }
     ],
     "no-plusplus": [
       "error",
       {
         "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["_id"]
       }
     ]
   },

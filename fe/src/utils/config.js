@@ -66,3 +66,13 @@ export const data = {
   fax: '',
   logo: '',
 };
+/**
+ * Slider默认数据
+ */
+export const sliderData = {
+  url: '',
+  title: '',
+  type: 'text',
+  stitle: '',
+  style: [],
+};

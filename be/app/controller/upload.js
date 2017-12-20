@@ -41,7 +41,7 @@ module.exports = app => {
         this.ctx.body = {
           code: 200,
           msg: {
-            url: `${this.ctx.helper.getUrl()}/api/public/${filename}`,
+            url: `/api/public/${filename}`,
           },
         };
       } catch (err) {

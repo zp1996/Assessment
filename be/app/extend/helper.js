@@ -37,19 +37,13 @@ module.exports = {
   checkParams(params) {
     let res = null;
     params.every(p => {
-      const flag = p.re ? p.re.test(p.data) : p.data !== '';
+      const flag = p.re ? p.re.test(p.data) :
+        p.fn ? p.fn(p.data) : p.data !== '';
       if (!flag) {
         res = this.paramErr(p.msg);
       }
       return flag;
     });
     return res;
-  },
-  /**
-   * 获取服务url地址
-   * @return {string} url
-   */
-  getUrl() {
-    return `${this.ctx.protocol}://${this.ctx.host}`;
   },
 };

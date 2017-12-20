@@ -5,7 +5,7 @@ import { Upload, Input, Button, Icon, message } from 'antd';
 import Wrapper from 'components/Wrapper';
 import Container from 'components/Container';
 import showError from 'components/ShowError';
-import { changeState, domChange } from 'utils/index';
+import { changeState, domChange, handleUploadRes } from 'utils/index';
 import { data } from 'utils/config';
 import styles from './index.less';
 
@@ -49,16 +49,7 @@ export default class IntroductionPage extends Component {
     this.submit = this.submit.bind(this);
     this.chance = this.chance.bind(this);
     this.changeStatus = changeState(this, 'change', () => true);
-    this.changeLogo = changeState(this, 'logo', (info) => {
-      const { file: { status, response } } = info;
-      if (status === 'done') {
-        if (response.code === 200) {
-          return response.msg.url;
-        } else {
-          showError(response);
-        }
-      }
-    });
+    this.changeLogo = changeState(this, 'logo', handleUploadRes(showError));
     this.keys.forEach((key) => {
       this[`change${key}`] = changeState(this, key, domChange);
     });
@@ -85,9 +76,9 @@ export default class IntroductionPage extends Component {
       message.success('更改成功！');
       d.success = false;
     } else if (this.props.error.err) {
-        showError(this.props.error);
-        // 不更新ui
-        this.props.error.err = false;
+      showError(this.props.error);
+      // 不更新ui
+      this.props.error.err = false;
     }
   }
   submit() {

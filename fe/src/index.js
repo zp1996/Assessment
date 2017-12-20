@@ -15,10 +15,9 @@ const app = dva({
   onAction: actionPlugins,
 });
 
-app.use(createLoading());
 app.use(createError());
+app.use(createLoading());
 
-app.model(require('./models/example'));
 app.model(require('./models/login'));
 app.model(require('./models/slider'));
 app.model(require('./models/introduction'));

@@ -1,47 +1,94 @@
 import { setup } from 'utils/redux-helper';
-import { get } from 'services/slider';
+import { get, add, update, del } from 'services/slider';
+import { setState } from './base';
 
 export default {
 
   namespace: 'slider',
 
   state: {
-    list: [
-      {
-        url: 'http://www.yijiahe.com.cn/temp/slider_index_02.jpg',
-        title: '诚信 . 创新 . 专注 . 极致',
-        stitle: '应用智能科技，改善人类生活',
-        style: ['center', 'big'],
-      },
-    ],
-    err: null,
+    list: [],
+    msg: '',
   },
 
   effects: {
     *get({}, { put }) {     // eslint-disable-line
-      const data = yield get();
-      console.log(data);
-      // yield put({
-      //   type: 'set',
-      //   payload: data,
-      // });
+      const list = yield get();
+      yield put({
+        type: 'init',
+        list,
+      });
+    },
+    *add({ payload }, { put }) {
+      const res = yield add({ payload });
+      payload._id = res.id;
+      yield put({
+        type: 'addSuccess',
+        msg: res.text,
+        item: payload,
+      });
+    },
+    *update({ payload }, { put }) {
+      const id = payload._id;
+      delete payload._id;
+      const data = payload;
+      const res = yield update({ payload: { id, data } });
+      yield put({
+        type: 'updateSuccess',
+        msg: res.text,
+        id,
+        data,
+      });
+    },
+    *delete({ id }, { put }) {
+      const msg = yield del({ payload: { id } });
+      yield put({
+        type: 'deleteSuccess',
+        msg,
+        id,
+      });
     },
   },
 
   subscriptions: {
-    setup: setup('/slider', ['slider/get']),
+    setup: setup('/slider', ['get']),
   },
 
   reducers: {
-    set(state, action) {
-      const { payload: { code, msg, list = null } } = action;
-      const err = code && msg ? { code, msg } : null;
+    addSuccess: (state, action) => {
+      const { list } = state;
+      list.push(action.item);
       return {
         ...state,
-        err,
-        list,
+        ...{ msg: action.msg, list },
       };
     },
+    updateSuccess: (state, action) => {
+      const { list } = state;
+      const { id, data, msg } = action;
+      for (let i = 0, item; item = list[i++]; ) {   // eslint-disable-line
+        if (item._id === id) {
+          Object.keys(data).forEach((key) => {
+            item[key] = data[key];
+          });
+          break;
+        }
+      }
+      return {
+        ...state,
+        ...{ msg, list },
+      };
+    },
+    deleteSuccess: (state, action) => {
+      let { list } = state;
+      const { id, msg } = action;
+      list = list.filter(item => item._id !== id);
+      return {
+        ...state,
+        ...{ msg, list },
+      };
+    },
+    init: setState('list'),
   },
 
 };

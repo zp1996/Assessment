@@ -1,10 +1,8 @@
 'use strict';
 
 module.exports = app => {
-  app.get('/', 'home.index');
-
-  /* Banner图相关接口 */
-  app.get('/slider/get', 'slider.get');
+  /* 对前台接口 */
+  app.get('/home', 'home.index');
 
   /* 后台登录接口 */
   app.post('/be/login', 'be.login');
@@ -18,4 +16,10 @@ module.exports = app => {
 
   /* 上传图片接口 */
   app.post('/upload', 'upload.index');
+
+  /* Banner图相关接口 */
+  app.get('/slider/get', 'slider.get');
+  app.post('/slider/add', 'slider.add');
+  app.post('/slider/update', 'slider.update');
+  app.post('/slider/delete', 'slider.delete');
 };

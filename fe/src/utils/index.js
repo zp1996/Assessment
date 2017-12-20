@@ -24,3 +24,24 @@ export function changeState(ctx, key, fn = {}) {
  * dom改变state
  */
 export const domChange = e => e.target.value;
+/**
+ * 处理上传图片返回结果
+ * @param {function} efn - 处理错误函数
+ */
+export function handleUploadRes(efn) {
+  return (info) => {
+    const { file: { status, response } } = info;
+    if (status === 'done') {
+      if (response.code === 200) {
+        return response.msg.url;
+      } else {
+        efn(response);
+      }
+    } else if (status === 'error') {
+      efn({
+        code: 400,
+        msg: '上传图片发生错误，请稍后再试！',
+      });
+    }
+  };
+}
