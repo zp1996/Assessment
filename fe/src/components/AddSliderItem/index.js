@@ -113,12 +113,11 @@ export default class AddSliderItem extends PureComponent {
         message.success('更新成功');
       } else {
         if (!addnew) {
-          payload._id = this.state._id;       // eslint-disable-line
+          payload._id = this.state._id;
         }
         this.props.save(payload);
       }
     }
-    this.setState({ nochange: true });
   }
   render() {
     const { url, title = '', stitle = '', type, style, nochange } = this.state;

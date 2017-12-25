@@ -5,6 +5,8 @@ import IndexPage from 'routes/IndexPage';
 import LoginPage from 'routes/LoginPage';
 import SliderPage from 'routes/SliderPage';
 import IntroductionPage from 'routes/IntroductionPage';
+import NewsPage from 'routes/NewsPage';
+import AddNewPage from 'routes/AddNewPage';
 
 function RouterConfig({ history }) {
   return (
@@ -14,6 +16,8 @@ function RouterConfig({ history }) {
         <Route path="/login" exact component={LoginPage} />
         <Route path="/slider" exact component={SliderPage} />
         <Route path="/introduction" exact component={IntroductionPage} />
+        <Route path="/new" exact component={NewsPage} />
+        <Route path="/addnew" exact component={AddNewPage} />
       </Switch>
     </ConnectedRouter>
   );

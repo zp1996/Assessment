@@ -7,7 +7,7 @@ import './styles/index.less';
 const actionPlugins = [];
 
 if (process.env.NODE_ENV !== 'production') {
-  actionPlugins.push(require('redux-logger').default);
+  // actionPlugins.push(require('redux-logger').default);
 }
 
 const app = dva({
@@ -21,6 +21,7 @@ app.use(createLoading());
 app.model(require('./models/login'));
 app.model(require('./models/slider'));
 app.model(require('./models/introduction'));
+app.model(require('./models/news'));
 
 app.router(require('./router'));
 

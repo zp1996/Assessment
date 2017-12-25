@@ -1,3 +1,6 @@
+import { message } from 'antd';
+import showError from 'components/ShowError';
+
 /**
  * 密码校验,a-zA-z0-9_,6到18位
  */
@@ -41,6 +44,24 @@ export function handleUploadRes(efn) {
       efn({
         code: 400,
         msg: '上传图片发生错误，请稍后再试！',
+      });
+    }
+  };
+}
+/**
+ * react通用提示
+ */
+export function componentDidUpdate(type) {
+  return function () {
+    const { error, msg } = this.props;
+    if (error.err) {
+      showError(error);
+      error.err = false;
+    } else if (msg != null && msg !== '') {
+      message.success(msg);
+      this.props.dispatch({
+        type: `${type}/resetMsg`,
+        msg: '',
       });
     }
   };

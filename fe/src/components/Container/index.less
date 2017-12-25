@@ -10,9 +10,9 @@
   text-align: left;
   .lh-equal-h(@bg-font-size + 4px);
 }
-.menu {
+:global(.menu) {
   font-size: @font-size;
-  &-active {
-    color: @hover-color;
-  }
+}
+:global(.menu-active) {
+  color: @hover-color;
 }

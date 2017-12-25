@@ -1,6 +1,6 @@
 import { setup } from 'utils/redux-helper';
 import { get, add, update, del } from 'services/slider';
-import { setState } from './base';
+import { setState, deleteSuccess, deleteEffects } from './base';
 
 export default {
 
@@ -40,14 +40,7 @@ export default {
         data,
       });
     },
-    *delete({ id }, { put }) {
-      const msg = yield del({ payload: { id } });
-      yield put({
-        type: 'deleteSuccess',
-        msg,
-        id,
-      });
-    },
+    ...deleteEffects(del),
   },
 
   subscriptions: {
@@ -79,15 +72,7 @@ export default {
         ...{ msg, list },
       };
     },
-    deleteSuccess: (state, action) => {
-      let { list } = state;
-      const { id, msg } = action;
-      list = list.filter(item => item._id !== id);
-      return {
-        ...state,
-        ...{ msg, list },
-      };
-    },
+    deleteSuccess: deleteSuccess(),
     init: setState('list'),
   },
 

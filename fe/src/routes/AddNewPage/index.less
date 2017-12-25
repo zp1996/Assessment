@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+@import "../../styles/variables.less";
+@import "../../styles/mixins.less";
+
+@s: 250px;
+@h: 150px;
+
+.addnew-content {
+  width: @add-width;
+  margin: auto;
+  padding: 30px;
+}
+:global(.DraftEditor-editorContainer) {
+  border: 1px solid #f0efef;
+  padding: 20px;
+  min-height: 400px;
+}
+.submit-area {
+  text-align: center;
+  margin-top: 30px;
+}
+.title-ul {
+  position: relative;
+  li {
+    margin-bottom: 20px;
+    line-height: 28px;
+  }
+}
+.title {
+  input {
+    width: 350px;
+  }
+}
+.des {
+  textarea {
+    width: 450px;
+    height: 60px;
+    resize: none;
+  }
+}
+.img-area {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+}
+.img-span {
+  display: inline-block;
+  .size(@s, @h);
+  line-height: @h;
+  text-align: center;
+  border: @add-border;
+}
+.img {
+  .size(@s, @h);
+}
+:global(.news-img .ant-upload-list) {
+  display: inline-block;
+  width: 150px;
+  vertical-align: middle;
+  margin-top: -10px;
+  margin-left: 10px;
+}
+.label {
+  float: left;
+}
+
+/* 更改编译器样式 */
+:global(.rdw-image-modal) {
+  right: 5px !important;
+  left: auto !important;
+}
+:global(.rdw-image-imagewrapper img) {
+  width: 100% !important;
+}

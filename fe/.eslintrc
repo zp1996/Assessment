@@ -27,7 +27,7 @@
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": ["payload", "perr", "res", "component", "nextState", "error"]
+        "ignorePropertyModificationsFor": ["payload", "perr", "res", "component", "nextState", "error", "action"]
       }
     ],
     "class-methods-use-this": [

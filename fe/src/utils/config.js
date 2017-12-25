@@ -1,3 +1,5 @@
+import { EditorState } from 'draft-js';
+
 // 头部文案
 export const HeaderText = '企业官网配置后台';
 // 底部文案
@@ -24,30 +26,38 @@ export const router = {
     icon: 'layout',
     text: '产品Tab',
   },
-  '/demo': {
-    key: 'users',
-    icon: 'user',
-    text: '教职人员',
-    children: [
-      { key: '2', text: '院系正职' },
-    ],
+  '/new': {
+    key: 'new',
+    icon: 'notification',
+    text: '新闻媒体',
+  },
+  '/addnew': {
+    key: 'new',
   },
 };
-export const routerOrder = ['/introduction', '/', '/demo', '/slider', '/tab'];
+export const routerOrder = ['/introduction', '/', '/slider', '/tab', '/new'];
 /**
  * 内容区导航
  * key为路由,value为期望导航(shape({text, href}) of array)
  */
 export const contentMenu = {
   index: [
-    { text: '头部导航' },
-    { text: '一级导航' },
+    { breadcrumbName: '头部导航' },
+    { breadcrumbName: '一级导航' },
   ],
   slider: [
-    { text: '宣传Banner' },
+    { breadcrumbName: '宣传Banner' },
   ],
   introduction: [
-    { text: '公司及网站信息' },
+    { breadcrumbName: '公司及网站信息' },
+  ],
+  news: [
+    { breadcrumbName: '新闻媒体' },
+    { breadcrumbName: '新闻列表' },
+  ],
+  addnew: [
+    { breadcrumbName: '新闻媒体', path: '/new' },
+    { breadcrumbName: '发布新闻' },
   ],
 };
 /**
@@ -76,3 +86,14 @@ export const sliderData = {
   stitle: '',
   style: [],
 };
+/**
+ * 添加文章默认数据
+ */
+export function addNewData() {
+  return {
+    content: EditorState.createEmpty(),
+    title: '',
+    des: '',
+    img: '',
+  };
+}
