@@ -1,6 +1,7 @@
 'use strict';
 
 const { IntroductionStruct } = require('../lib/struct');
+const response = require('../lib/response');
 
 module.exports = app => {
   class IntroductionController extends app.Controller {
@@ -8,27 +9,7 @@ module.exports = app => {
       super(ctx);
       this.helper = this.ctx.helper;
       this.model = this.ctx.model.Introduction;
-    }
-    * baseSave(fn, msg, hd = v => v) {
-      const { payload } = this.ctx.request.body;
-      const params = [];
-      const data = hd(payload);
-      Object.keys(data).forEach(key => {
-        if (key !== 'id') {
-          params.push({
-            data: data[key],
-            msg: IntroductionStruct[key],
-          });
-        }
-      });
-
-      const body = this.helper.checkParams(params);
-      if (body) {
-        this.ctx.body = body;
-      } else {
-        yield this.model[fn](payload);
-        this.ctx.body = this.helper.success(msg);
-      }
+      this.baseSave = response(this, IntroductionStruct);
     }
     * add() {
       yield this.baseSave('add', '添加成功');

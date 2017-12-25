@@ -26,5 +26,6 @@ exports.dateSchema = {
 exports.createError = function(msg) {
   const error = new Error();
   error.msg = msg;
+  error.code = 400;
   return error;
 };

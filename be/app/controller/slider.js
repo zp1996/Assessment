@@ -1,6 +1,7 @@
 'use strict';
 
 const { SliderStruct } = require('../lib/struct');
+const response = require('../lib/response');
 
 module.exports = app => {
   class SliderController extends app.Controller {
@@ -8,6 +9,12 @@ module.exports = app => {
       super(ctx);
       this.helper = this.ctx.helper;
       this.model = this.ctx.model.Slider;
+      this.baseSave = response(this, SliderStruct, (p, key) => {
+        if (key === 'style') {
+          p.fn = d => Array.isArray(d) && d.length;
+        }
+        return p;
+      });
     }
     * get() {
       const list = yield this.model.get();
@@ -15,34 +22,6 @@ module.exports = app => {
         code: 200,
         msg: list,
       };
-    }
-    * baseSave(fn, msg, hd = v => v) {
-      const { payload } = this.ctx.request.body;
-      const params = [];
-      const data = hd(payload);
-      Object.keys(data).forEach(key => {
-        if (key !== 'id') {
-          const p = {
-            data: data[key],
-            msg: SliderStruct[key].text || SliderStruct[key],
-          };
-          if (key === 'style') {
-            p.fn = d => Array.isArray(d) && d.length;
-          }
-          params.push(p);
-        }
-      });
-
-      const body = this.helper.checkParams(params);
-      if (body) {
-        this.ctx.body = body;
-      } else {
-        const id = yield this.model[fn](payload);
-        this.ctx.body = this.helper.success({
-          text: msg,
-          id,
-        });
-      }
     }
     * add() {
       yield this.baseSave('add', '添加成功');

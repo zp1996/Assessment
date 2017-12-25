@@ -22,4 +22,12 @@ module.exports = app => {
   app.post('/slider/add', 'slider.add');
   app.post('/slider/update', 'slider.update');
   app.post('/slider/delete', 'slider.delete');
+
+  /* 新闻媒体相关接口 */
+  app.post('/news/add', 'news.add');
+  app.post('/news/delete', 'news.delete');
+  app.post('/news/update', 'news.update');
+  app.get('/news/getContent/:id', 'news.getContent');
+  app.get('/news/getArticle/:id', 'news.getArticle');
+  app.get('/news/getNewsList/:page', 'news.getNewsList');
 };

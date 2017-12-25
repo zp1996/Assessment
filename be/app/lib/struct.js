@@ -37,6 +37,15 @@ exports.SliderStruct = {
   },
 };
 
+/**
+ * news数据结构
+ */
+exports.NewsStruct = {
+  title: '请输入新闻标题',
+  des: '请输入新闻摘要',
+  content: '请输入新闻内容',
+  img: '请输入封面图片',
+};
 
 /**
  * 生成Schema
@@ -50,4 +59,16 @@ exports.getSchema = struct => {
     res[key] = struct[key].type || String;
   }
   return res;
+};
+/**
+ * 获取年月日
+ * @param {object} date - date对象
+ * @return {string} xxxx年xx月xx日
+ */
+exports.getFormatDate = function(date) {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  if (day < 10) day = `0${day}`;
+  if (month < 10) month = `0${month}`;
+  return `${date.getFullYear()}年${month}月${day}日`;
 };

@@ -9,7 +9,7 @@ module.exports = {
   serverError(err) {
     this.app.logger.error(err);
     return {
-      code: 500,
+      code: err.code || 500,
       msg: err.msg || '服务器发生未知错误！',
     };
   },
