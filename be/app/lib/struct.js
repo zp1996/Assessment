@@ -48,6 +48,13 @@ exports.NewsStruct = {
 };
 
 /**
+ * menu数据结构
+ */
+exports.MenuStruct = {
+  title: '请输入导航标题',
+  href: '请输入导航链接',
+};
+/**
  * 生成Schema
  * @param {object} struct - 数据结构hash对象
  * @return {object} mongoose数据类型

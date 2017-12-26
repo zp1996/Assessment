@@ -28,7 +28,6 @@ module.exports = app => {
         return res._id;
       }
       throw createError('该新闻题目已经存在，不可再次创建');
-
     },
     * update({ id, data }) {
       if (data.content) {
@@ -57,7 +56,8 @@ module.exports = app => {
       const res = yield this.find({ status: 1 })
         .skip(limit * page)
         .limit(limit)
-        .select(fields.join(' '));
+        .select(fields.join(' '))
+        .sort({ updateTime: 'desc' });
       return res;
     },
     * getHandleNewsList(page, limit) {
@@ -67,6 +67,10 @@ module.exports = app => {
         key: item._id,
         updateTime: getFormatDate(item.updateTime),
       }));
+    },
+    * getPageList(page, limit) {
+      const res = yield this.getNewsList([ 'title', 'des', 'img' ], page, limit);
+      return res;
     },
     * delete(id) {
       yield this.findByIdAndUpdate(id, { $set: { status: 0 } });

@@ -1,5 +1,7 @@
 'use strict';
 
+const newsLimit = 6;
+
 module.exports = app => {
   class HomeController extends app.Controller {
     constructor(ctx) {
@@ -8,6 +10,9 @@ module.exports = app => {
       this.model = this.ctx.model;
     }
     * index() {
+      // 获取news数据
+      const news = yield this.model.News.getPageList(0, newsLimit);
+      // 获取slider数据
       let slider = yield this.model.Slider.get();
       slider = slider.map(item => {
         const r = {
@@ -25,10 +30,12 @@ module.exports = app => {
         return r;
       });
 
-      this.ctx.body = {
-        code: 200,
-        msg: { slider },
-      };
+      this.ctx.body = this.helper.success({ slider, news });
+    }
+    * news() {
+      const { params: { page = 1 } } = this.ctx;
+      const news = yield this.model.News.getPageList(page - 1, newsLimit);
+      this.ctx.body = this.helper.success({ news });
     }
   }
   return HomeController;

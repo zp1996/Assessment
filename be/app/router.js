@@ -3,6 +3,7 @@
 module.exports = app => {
   /* 对前台接口 */
   app.get('/home', 'home.index');
+  app.get('/news/:page', 'home.news');
 
   /* 后台登录接口 */
   app.post('/be/login', 'be.login');
@@ -30,4 +31,10 @@ module.exports = app => {
   app.get('/news/getContent/:id', 'news.getContent');
   app.get('/news/getArticle/:id', 'news.getArticle');
   app.get('/news/getNewsList/:page', 'news.getNewsList');
+
+  /* 导航相关接口 */
+  app.post('/menu/add', 'menu.add');
+  app.post('/menu/update', 'menu.update');
+  app.get('/menu/getList', 'menu.getList');
+  app.post('/menu/delete', 'menu.delete');
 };
