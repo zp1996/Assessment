@@ -1,10 +1,9 @@
 import { setup } from 'utils/redux-helper';
-import { get, add, update, del } from 'services/slider';
+import { get, add, update, del } from 'services/menu';
 import { setState, deleteSuccess, updateSuccess, deleteEffects } from './base';
 
 export default {
-
-  namespace: 'slider',
+  namespace: 'menu',
 
   state: {
     list: [],
@@ -12,7 +11,7 @@ export default {
   },
 
   effects: {
-    *get({}, { put }) {     // eslint-disable-line
+    *get({}, { put }) {      // eslint-disable-line
       const list = yield get();
       yield put({
         type: 'init',
@@ -20,45 +19,45 @@ export default {
       });
     },
     *add({ payload }, { put }) {
-      const res = yield add({ payload });
-      payload._id = res.id;
+      const { id, text } = yield add({ payload });
       yield put({
         type: 'addSuccess',
-        msg: res.text,
-        item: payload,
+        data: payload,
+        id,
+        msg: text,
       });
     },
     *update({ payload }, { put }) {
-      const id = payload._id;
-      delete payload._id;
-      const data = payload;
-      const res = yield update({ payload: { id, data } });
+      const { text } = yield update({ payload });
       yield put({
         type: 'updateSuccess',
-        msg: res.text,
-        id,
-        data,
+        data: payload.data,
+        msg: text,
+        id: payload.id,
       });
     },
     ...deleteEffects(del),
   },
 
   subscriptions: {
-    setup: setup('/slider', ['get']),
+    setup: setup('/', ['get']),
   },
 
   reducers: {
     addSuccess: (state, action) => {
       const { list } = state;
-      list.push(action.item);
+      const { msg, id } = action;
+      const data = Object.assign(action.data, id);
+      list.push(data);
+
       return {
         ...state,
-        ...{ msg: action.msg, list },
+        ...{ msg, list },
       };
     },
-    updateSuccess: updateSuccess(),
-    deleteSuccess: deleteSuccess(),
     init: setState('list'),
+    resetMsg: setState('msg'),
+    updateSuccess: updateSuccess('id'),
+    deleteSuccess: deleteSuccess('id'),
   },
-
 };

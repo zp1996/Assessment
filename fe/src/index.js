@@ -22,6 +22,7 @@ app.model(require('./models/login'));
 app.model(require('./models/slider'));
 app.model(require('./models/introduction'));
 app.model(require('./models/news'));
+app.model(require('./models/menu'));
 
 app.router(require('./router'));
 

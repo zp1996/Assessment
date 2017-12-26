@@ -28,6 +28,25 @@ export function deleteSuccess(key = '_id') {
   };
 }
 
+export function updateSuccess(k = '_id') {
+  return (state, action) => {
+    const { list } = state;
+    const { id, data, msg } = action;
+    for (let i = 0, item; item = list[i++]; ) {       // eslint-disable-line
+      if (item[k] === id) {
+        Object.keys(data).forEach((key) => {
+          item[key] = data[key];
+        });
+        break;
+      }
+    }
+    return {
+      ...state,
+      ...{ msg, list },
+    };
+  };
+}
+
 export function deleteEffects(del) {
   return {
     *delete({ id }, { put }) {
